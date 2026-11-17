@@ -1,0 +1,17 @@
+# Environnement virtuel : ne doit pas être remis dans l'archive ni sur Git
+.venv/
+venv/
+
+# Fichiers générés par Python
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Base de données SQLite locale (pas de vraies données dans le dépôt)
+*.db
+*.sqlite
+*.sqlite3
+
+# Variables d'environnement et captures d'éditeur
+.env
+.vscode/
