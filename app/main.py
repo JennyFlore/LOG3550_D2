@@ -1,7 +1,6 @@
 """Point d'entrée de l'application : création de l'API FastAPI.
 
-Les routeurs (Partie 3) et le CORS (Partie 6) seront ajoutés dans les
-prochaines étapes.
+Le CORS sera ajouté à la Partie 6.
 """
 from contextlib import asynccontextmanager
 
@@ -9,6 +8,7 @@ from fastapi import FastAPI
 from sqlmodel import Session
 
 from app.database import charger_livres_de_depart, creer_tables, engine
+from app.routers import livres
 
 
 @asynccontextmanager
@@ -26,3 +26,16 @@ app = FastAPI(
     version="1.0.0",
     lifespan=lifespan,
 )
+
+# Branche les points d'accès de livres.py sur l'application
+app.include_router(livres.router)
+
+
+@app.get(
+    "/sante",
+    tags=["Santé"],
+    summary="Vérifier que l'API fonctionne",
+    description="Renvoie toujours `{\"statut\": \"ok\"}` quand le serveur répond.",
+)
+def sante():
+    return {"statut": "ok"}
