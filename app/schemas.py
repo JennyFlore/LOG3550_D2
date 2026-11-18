@@ -44,7 +44,22 @@ class LivreCreate(BaseModel):
     """Corps d'une demande POST /livres. Aucun id : il est généré par la base."""
 
     # forbid : un champ inconnu (par exemple "id") est refusé avec une erreur 422
-    model_config = ConfigDict(extra="forbid")
+    # json_schema_extra : l'exemple affiché dans /docs (Swagger)
+    model_config = ConfigDict(
+        extra="forbid",
+        json_schema_extra={
+            "examples": [
+                {
+                    "titre": "Le Petit Prince",
+                    "auteur": "Antoine de Saint-Exupéry",
+                    "annee": 1943,
+                    "categorie": "roman",
+                    "isbn": "9782070612758",
+                    "disponible": True,
+                }
+            ]
+        },
+    )
 
     titre: Texte
     auteur: Texte
@@ -60,7 +75,10 @@ class LivreUpdate(BaseModel):
     Tous les champs sont facultatifs : on n'envoie que ceux à modifier.
     """
 
-    model_config = ConfigDict(extra="forbid")
+    model_config = ConfigDict(
+        extra="forbid",
+        json_schema_extra={"examples": [{"disponible": False}]},
+    )
 
     titre: Optional[Texte] = None
     auteur: Optional[Texte] = None
@@ -82,7 +100,22 @@ class LivreRead(BaseModel):
     """Réponse de l'API : un livre complet, avec son id généré."""
 
     # from_attributes : permet de construire ce schéma à partir d'un objet de la base
-    model_config = ConfigDict(from_attributes=True)
+    model_config = ConfigDict(
+        from_attributes=True,
+        json_schema_extra={
+            "examples": [
+                {
+                    "id": 1,
+                    "titre": "Le Petit Prince",
+                    "auteur": "Antoine de Saint-Exupéry",
+                    "annee": 1943,
+                    "categorie": "roman",
+                    "isbn": "9782070612758",
+                    "disponible": True,
+                }
+            ]
+        },
+    )
 
     id: int
     titre: str
