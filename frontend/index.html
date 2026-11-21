@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Catalogue de bibliothèque</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <header>
+    <h1>Catalogue de bibliothèque</h1>
+    <nav aria-label="Navigation principale">
+      <ul>
+        <li><a href="#catalogue">Catalogue</a></li>
+        <li><a href="#ajout">Ajouter un livre</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section id="catalogue" aria-labelledby="titre-catalogue">
+      <h2 id="titre-catalogue">Catalogue</h2>
+
+      <!-- Recherche, filtres et tri : tous utilisables ensemble -->
+      <div class="outils" role="search">
+        <div>
+          <label for="recherche">Rechercher (titre ou auteur)</label>
+          <input type="search" id="recherche" placeholder="Ex. : camus">
+        </div>
+
+        <div>
+          <label for="filtre-categorie">Catégorie</label>
+          <select id="filtre-categorie">
+            <option value="">Toutes</option>
+            <option value="roman">Roman</option>
+            <option value="science">Science</option>
+            <option value="histoire">Histoire</option>
+            <option value="informatique">Informatique</option>
+            <option value="autre">Autre</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="tri">Trier par</label>
+          <select id="tri">
+            <option value="titre-asc">Titre (A → Z)</option>
+            <option value="titre-desc">Titre (Z → A)</option>
+            <option value="annee-asc">Année (croissant)</option>
+            <option value="annee-desc">Année (décroissant)</option>
+          </select>
+        </div>
+
+        <div>
+          <input type="checkbox" id="filtre-disponibles">
+          <label for="filtre-disponibles">Disponibles seulement</label>
+        </div>
+      </div>
+
+      <!-- État de l'API : « Chargement… » ou message d'erreur (le rôle change en JavaScript) -->
+      <div id="etat-api" class="etat-api" role="status" hidden>
+        <p id="texte-etat-api"></p>
+        <button type="button" id="bouton-reessayer" hidden>Réessayer</button>
+      </div>
+
+      <!-- aria-live : le lecteur d'écran annonce le nombre de résultats -->
+      <p id="compteur" aria-live="polite"></p>
+      <p id="message-vide" hidden>Aucun livre ne correspond à votre recherche.</p>
+
+      <!-- Les cartes de livres sont générées par JavaScript (js/app.js) -->
+      <div id="liste-livres"></div>
+    </section>
+
+    <section id="ajout" aria-labelledby="titre-ajout">
+      <h2 id="titre-ajout">Ajouter un livre</h2>
+      <form id="formulaire-ajout" novalidate>
+        <div>
+          <label for="titre">Titre</label>
+          <input type="text" id="titre" name="titre" required aria-describedby="erreur-titre">
+          <p class="erreur" id="erreur-titre" aria-live="polite"></p>
+        </div>
+
+        <div>
+          <label for="auteur">Auteur</label>
+          <input type="text" id="auteur" name="auteur" required aria-describedby="erreur-auteur">
+          <p class="erreur" id="erreur-auteur" aria-live="polite"></p>
+        </div>
+
+        <div>
+          <label for="annee">Année de publication</label>
+          <input type="number" id="annee" name="annee" required aria-describedby="erreur-annee">
+          <p class="erreur" id="erreur-annee" aria-live="polite"></p>
+        </div>
+
+        <div>
+          <label for="categorie">Catégorie</label>
+          <select id="categorie" name="categorie" required aria-describedby="erreur-categorie">
+            <option value="">-- Choisir une catégorie --</option>
+            <option value="roman">Roman</option>
+            <option value="science">Science</option>
+            <option value="histoire">Histoire</option>
+            <option value="informatique">Informatique</option>
+            <option value="autre">Autre</option>
+          </select>
+          <p class="erreur" id="erreur-categorie" aria-live="polite"></p>
+        </div>
+
+        <div>
+          <input type="checkbox" id="disponible" name="disponible" checked>
+          <label for="disponible">Disponible</label>
+        </div>
+
+        <!-- Erreur renvoyée par l'API lors de l'ajout (réseau, 409, 422...) -->
+        <p class="erreur" id="erreur-formulaire" role="alert"></p>
+
+        <button type="submit">Ajouter le livre</button>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <p>LOG3550 Développement web · ISTEAH · Devoirs 1 et 2</p>
+  </footer>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

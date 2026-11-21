@@ -57,6 +57,17 @@ Les tests utilisent une base SQLite en mémoire, séparée de `bibliotheque.db`,
 
 Chaque erreur renvoie du JSON avec un message clair (par exemple `{"detail": "Livre introuvable"}`).
 
+## Frontend (Partie 6)
+
+Le frontend du devoir 1 est dans le dossier `frontend/`. Il lit, ajoute, emprunte et supprime les livres par l'API avec `fetch` (`async` et `await`), et n'utilise plus `localStorage`. Il affiche « Chargement des livres… » pendant que l'API répond, et un message d'erreur avec un bouton « Réessayer » si l'API est arrêtée. Le bouton « Réinitialiser » et le fichier `data.js` ont été retirés : les livres de départ sont maintenant chargés par l'API dans la base de données.
+
+Pour l'utiliser, il faut démarrer **deux choses** :
+
+1. L'API, dans un terminal (voir « Lancement ») : `uvicorn app.main:app --reload`.
+2. Le frontend, avec l'extension Live Server de VS Code : clic droit sur `frontend/index.html` puis « Open with Live Server ».
+
+La page doit s'ouvrir à l'adresse **`http://127.0.0.1:5500`**. Le CORS de l'API autorise uniquement cette origine (pas d'astérisque) : avec `http://localhost:5500`, le navigateur bloque les demandes et la page affiche « Impossible de joindre l'API ».
+
 ## Réponses aux questions d'explication
 
 ### Partie 1 : rôle de FastAPI, d'Uvicorn et de Pydantic, et séparation modèle / schémas
@@ -73,6 +84,6 @@ PUT remplace le livre au complet : il faut envoyer tous les champs obligatoires,
 
 ## Sources et outils d'assistance utilisés
 
-- Assistant IA : Claude (Anthropic), utilisé pour m'aider à réaliser ce devoir étape par étape : explication des termes, proposition de code et de tests, relecture.
+- Assistant IA : Claude (Anthropic), utilisé pour m'aider à réaliser ce devoir étape par étape : explication des termes, proposition de code et de tests, relecture. J'ai exécuté et lu le code avant de le garder.
 - Documentation officielle de FastAPI (https://fastapi.tiangolo.com), de SQLModel (https://sqlmodel.tiangolo.com), de Pydantic (https://docs.pydantic.dev) et de pytest (https://docs.pytest.org).
 - Outils : Visual Studio Code, Git et GitHub, Python et pip.
